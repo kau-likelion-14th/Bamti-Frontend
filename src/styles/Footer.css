@@ -1,0 +1,66 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    margin-top: 200px;
+    padding: 40px 60px;
+    background-color: #cfe3dc;
+    font-family: "Paperlogy", sans-serif;
+}
+
+/* 상단 */
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer-desk {
+    flex-direction: column;
+    
+}
+
+.footer-logo {
+    width: 36px;
+    height: 36px;
+}
+
+.footer-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1c1c1c;
+}
+
+.footer-desc {
+    font-size: 14px;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* 하단 */
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b6b6b;
+}
+
+.footer-row {
+    display: flex;
+    gap: 55px;
+}
+
+.footer-item {
+    display: flex;
+    gap: 16px;
+}

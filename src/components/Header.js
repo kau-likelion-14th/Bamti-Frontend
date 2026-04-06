@@ -1,6 +1,6 @@
-import "/Users/name/Desktop/my-project/src/styles/Header.css";
-import logo from "/Users/name/Desktop/my-project/src/assets/image/lte로고.png";
-import Logout_icon from "/Users/name/Desktop/my-project/src/assets/icon/로그아웃.png"
+import "/Users/name/Desktop/Bamti-Frontend/src/styles/Header.css";
+import logo from "/Users/name/Desktop/Bamti-Frontend/src/assets/image/lte로고.png";
+import Logout_icon from "/Users/name/Desktop/Bamti-Frontend/src/assets/icon/로그아웃.png"
 import { NavLink  } from "react-router-dom";
 
 function Header(){

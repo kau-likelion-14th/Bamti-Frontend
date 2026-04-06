@@ -18,6 +18,9 @@
 
 /* 투두 컨테이너 유연화 */
 .todo-container {
+  font-family: 'Paperlogy', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
   width: 100%;
   max-width: 440px;
   align-self: flex-start; 

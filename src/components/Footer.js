@@ -1,5 +1,5 @@
-import "/Users/name/Desktop/Bamti-Frontend/src/styles/Footer.css";
-import logo from "/Users/name/Desktop/Bamti-Frontend/src/assets/image/lte로고.png";
+import "../styles/Footer.css";
+import logo from "../assets/image/lte로고.png";
 
 function Footer() {
   return (

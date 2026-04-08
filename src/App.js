@@ -1,5 +1,5 @@
 import react from "react";
-import "/Users/name/Desktop/Bamti-Frontend/src/App.css";
+import "../src/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import MainPage from "./pages/Mainpage/Mainpage.js"

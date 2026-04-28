@@ -8,16 +8,15 @@ import Footer from "./components/Footer.js";
 
 function App() {
   return (
-    <div> 
+    <div className="app-layout">
       <Header />
-    
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-      </Routes>
-
+      <div className="app-main">
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
-
   );
 }
 

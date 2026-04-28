@@ -1,3 +1,13 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+}
+
 @font-face {
   font-family: "Paperlogy";
   src: url("./assets/font/Paperlogy-1Thin.ttf");

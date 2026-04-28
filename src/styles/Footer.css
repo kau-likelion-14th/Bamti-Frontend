@@ -1,10 +1,4 @@
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    margin-top: 200px;
     padding: 40px 60px;
     background-color: #cfe3dc;
     font-family: "Paperlogy", sans-serif;

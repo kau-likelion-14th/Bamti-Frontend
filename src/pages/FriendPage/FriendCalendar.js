@@ -44,7 +44,7 @@ function FriendCalendar({ todos = {}, onDateChange }) {
     };
 
     return (
-        <div className="calendar-wrapper">
+        <div className="calendar-container">
             <Calendar
                 value={selectedDate}
                 onChange={handleChange}

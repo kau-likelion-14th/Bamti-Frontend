@@ -1,0 +1,91 @@
+.friend-search {
+    width: 100%;
+}
+
+.friend-search__title {
+    margin-bottom: 24px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+}
+
+/* 검색 입력창 */
+.friend-search__input-wrap {
+    margin-bottom: 16px;
+}
+
+.friend-search__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Paperlogy', sans-serif;
+    outline: none;
+}
+
+.friend-search__input:focus {
+    border-color: #0a84ff;
+}
+
+/* 검색 결과 목록 */
+.friend-search__results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.friend-search__result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.friend-search__info {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.friend-search__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+}
+
+.friend-search__tag {
+    font-size: 13px;
+    color: #8f8f8f;
+}
+
+/* 팔로우 버튼 */
+.friend-search__follow-btn {
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #0a84ff;
+    background: white;
+    color: #0a84ff;
+    font-size: 14px;
+    font-family: 'Paperlogy', sans-serif;
+    cursor: pointer;
+}
+
+/* 이미 팔로우 중인 상태 */
+.friend-search__follow-btn.following {
+    border-color: #ddd;
+    color: #aaa;
+    cursor: default;
+}
+
+/* 검색 결과 없을 때 */
+.friend-search__empty {
+    font-size: 14px;
+    color: #8f8f8f;
+}

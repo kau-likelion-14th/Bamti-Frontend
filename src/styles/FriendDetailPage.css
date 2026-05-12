@@ -18,6 +18,18 @@
     margin-bottom: 40px;
 }
 
+/* 뒤로가기 버튼 */
+.friend-detail__back {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1c1c1c;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
 /* 프로필 아바타 */
 .friend-detail__avatar {
     width: 64px;
@@ -61,12 +73,58 @@
     margin-top: 4px;
 }
 
-/* 캘린더 + 투두 나란히 배치 */
+/* 캘린더 + 오른쪽 영역 나란히 배치 */
 .friend-detail__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: flex-start;
+}
+
+/* 오른쪽 컬럼 (음악 + 투두) */
+.friend-detail__right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 음악 카드 */
+.friend-detail__music-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f5f5f5;
+    border-radius: 12px;
+}
+
+.friend-detail__music-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #d0d0d0;
+    flex-shrink: 0;
+}
+
+.friend-detail__music-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.friend-detail__music-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.friend-detail__music-artist {
+    font-size: 13px;
+    color: #8f8f8f;
 }
 
 /* 투두 섹션 */

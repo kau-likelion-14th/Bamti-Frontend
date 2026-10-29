@@ -2,9 +2,47 @@ import "../styles/Header.css";
 import logo from "../assets/image/lte로고.png";
 import Logout_icon from "../assets/icon/로그아웃.png"
 import { NavLink, useNavigate } from "react-router-dom";
+import api from "../Api";
+import config from "../Config";
+import { useState } from "react";
 
 function Header(){
     const navigate = useNavigate();
+    const [loggingOut, setLoggingOut ] = useState(false);
+
+    let userName = "";
+
+    try {
+        userName = 
+            JSON.parse(localStorage.getItem("user") || "null"
+        )?.username ||"";
+    } catch {
+
+    }
+
+const handleLogout = async () => {
+    if(loggingOut) return;
+    setLoggingOut(true);
+
+    try {
+        const { data } = await api.post(
+            config.AUTH.LOGOUT,
+            {}
+        );
+
+        if (data?.isSuccess === false) {
+            throw new Error("로그아웃 실패");
+        }
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+        window.dispatchEvent(new Event("auth:changed"));
+        navigate("/login", { replace: true });
+    }catch {
+        alert("로그아웃에 실패했습니다");
+    }finally {
+        setLoggingOut(false);
+    }
+}
 
     return(
         <header className="header">
@@ -31,8 +69,10 @@ function Header(){
 
             {/*사용자정보*/}
             <div className="header-right">
-                <span className="user-name">김승욱님</span>
-                <img src={Logout_icon} alt="로그아웃" className="logout-icon" onClick={() => navigate("/login")}/>
+                <span className="user-name">
+                    {userName ? `${userName}님` : ""}
+                </span>
+                <img src={Logout_icon} alt="로그아웃" className="logout-icon" onClick={handleLogout}/>
             </div>
         </header>
     )

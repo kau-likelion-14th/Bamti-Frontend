@@ -6,24 +6,30 @@ import MainPage from "./pages/Mainpage/Mainpage.js";
 import LoginPage from "./pages/LoginPage/LoginPage.js";
 import Footer from "./components/Footer.js";
 import MyPage from "./pages/MyPage/MyPage.js";
+import ProtectedRoute from "./routes/ProtectRoute.js";
 import FriendPage from "./pages/FriendPage/FriendPage.js";
 import FriendDetailPage from "./pages/FriendPage/FriendDetailPage.js";
 
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = 
+    location.pathname === '/login' ||
+    location.pathname === '/login/oauth2/code/kakao';
 
   return (
     <div>
       {!isLoginPage && <Header />}
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/login/oauth2/code/kakao" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/friends" element={<FriendPage />} />
-        {/* 친구 상세 페이지: /friends/:id */}
-        <Route path="/friends/:id" element={<FriendDetailPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/mypage" element={<MyPage />} />    
+          <Route path="/friends" element={<FriendPage />} />
+          <Route path="/friends/:id" element={<FriendDetailPage />} />
+        </Route>
       </Routes>
+
       {!isLoginPage && <Footer />}
     </div>
   );

@@ -1,150 +1,160 @@
-.friend-detail {
-    margin-top: 80px;
-    width: 100%;
-    font-family: 'Paperlogy', sans-serif;
+.friend-detail-page {
+  margin-top: 100px;
+  width: 100%;
+  background: #ffffff;
 }
 
-.friend-detail__inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 72px 24px 80px;
-    box-sizing: border-box;
+.friend-detail-page__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+  box-sizing: border-box;
 }
 
-/* 프로필 헤더 영역 */
-.friend-detail__header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
+/* 상단 */
+.friend-detail-page__top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
 }
 
-/* 뒤로가기 버튼 */
-.friend-detail__back {
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #1c1c1c;
-    padding: 0;
-    line-height: 1;
-    flex-shrink: 0;
+.friend-detail-page__back {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 44px;
+  line-height: 44px;
+  color: #333333;
+  padding: 0;
+  flex-shrink: 0;
 }
 
-/* 프로필 아바타 */
-.friend-detail__avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: #8f8f8f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
+.friend-detail-page__profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  flex-shrink: 0;
 }
 
-.friend-detail__avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.friend-detail-page__avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #8f8f8f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* 이름 + 태그 */
-.friend-detail__name {
-    font-size: 22px;
-    font-weight: 700;
-    color: #111;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
+.friend-detail-page__profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
-.friend-detail__tag {
-    font-size: 15px;
-    font-weight: 400;
-    color: #8f8f8f;
+.friend-detail-page__name-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
 }
 
-/* 소개글 */
-.friend-detail__bio {
-    font-size: 14px;
-    color: #8f8f8f;
-    margin-top: 4px;
+.friend-detail-page__name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #333333;
+  white-space: nowrap;
 }
 
-/* 캘린더 + 오른쪽 영역 나란히 배치 */
-.friend-detail__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: flex-start;
+.friend-detail-page__tag {
+  font-size: 18px;
+  color: #8f8f8f;
+  font-weight: 500;
 }
 
-/* 오른쪽 컬럼 (음악 + 투두) */
-.friend-detail__right {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.friend-detail-page__bio {
+  font-size: 13px;
+  color: #8f8f8f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* 음악 카드 */
-.friend-detail__music-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    background: #f5f5f5;
-    border-radius: 12px;
+.friend-detail-page__songs-inline {
+  margin-left: auto;
+  transform: translateX(-110px);
+  max-width: 460px;
+  min-width: 0;
+  width: 100%;
+}
+.friend-detail-page__song-inline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 84px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: #f7faf8;
+  box-sizing: border-box;
 }
 
-.friend-detail__music-thumb {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    background: #d0d0d0;
-    flex-shrink: 0;
+.friend-detail-page__song-inline-cover {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e9ecef;
+  flex-shrink: 0;
 }
 
-.friend-detail__music-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
+.friend-detail-page__song-inline-info {
+  min-width: 0;
+  flex: 1;
 }
 
-.friend-detail__music-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #111;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.friend-detail-page__song-inline-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.friend-detail__music-artist {
-    font-size: 13px;
-    color: #8f8f8f;
+.friend-detail-page__song-inline-artist {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #777777;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* 투두 섹션 */
-.friend-detail__todo-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.friend-detail-page__songs-inline-empty {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 84px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: #f7faf8;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #9aa1a7;
 }
 
-.friend-detail__todo-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #111;
-}
-
-/* 존재하지 않는 친구 안내 */
-.friend-detail__not-found {
-    text-align: center;
-    margin-top: 120px;
-    font-size: 18px;
-    color: #8f8f8f;
+/* 본문 그리드 */
+.friend-detail-page__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
 }

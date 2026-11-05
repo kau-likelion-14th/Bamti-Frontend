@@ -2,29 +2,45 @@ import { useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/icon/delete.png";
 import "../../styles/FriendList.css";
 
-// 팔로우 목록을 보여주는 컴포넌트
-// props: title(제목), friends(친구 목록), onClickRemove(삭제 콜백), emptyText(빈 목록 메시지)
+// 팔로우 목록을 보여주는 컴포넌트 (API 요청은 부모 FriendPage가 담당)
+// props: title, friends, onClickRemove, emptyText, loading(조회 중), error(조회 실패 문구), onRetry(다시 조회)
 function FriendList(
   {
     title = "팔로우 목록",
     friends = [],
     onClickRemove,
     emptyText = "팔로우하는 친구가 없습니다.",
+    loading = false,
+    error = "",
+    onRetry,
   }
 ) {
   const navigate = useNavigate();
 
   // 친구 상세 페이지로 이동 (경로: /friends/:id)
   const goFriendDetail = (friend) => {
-    navigate(`/friends/${friend.id}`);
+    navigate(`/friends/${friend.id}`, {
+      state: { friend },
+    });
   };
 
   return (
     <section className="friend-list">
       <h2 className="friend-list__title">{title}</h2>
 
-      {/* 친구 목록이 없을 때 */}
-      {friends.length === 0 ? (
+      {/* 표시 우선순위: 로딩 → 오류 → 빈 목록 → 목록 */}
+      {loading ? (
+        <div className="friend-list__empty" role="status">
+          팔로우 목록을 불러오는 중...
+        </div>
+      ) : error ? (
+        <div className="friend-list__empty">
+          <p role="alert">{error}</p>
+          <button type="button" onClick={onRetry}>
+            다시 시도
+          </button>
+        </div>
+      ) : friends.length === 0 ? (
         <div className="friend-list__empty">{emptyText}</div>
       ) : (
         <ul className="friend-list__items">
@@ -55,7 +71,9 @@ function FriendList(
                 <div className="friend-info">
                   <div className="friend-info__top">
                     <span className="friend-info__name">{friend.name}</span>
-                    <span className="friend-info__tag">#{friend.tag}</span>
+                    {friend.tag && (
+                      <span className="friend-info__tag">#{friend.tag}</span>
+                    )}
                   </div>
 
                   {friend.bio ? (

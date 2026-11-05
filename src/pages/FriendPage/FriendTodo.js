@@ -1,30 +1,38 @@
 import React from "react";
+
 import "../../styles/Todo.css";
+import "../../styles/FriendTodo.css";
 
-// 친구의 투두 목록을 읽기 전용으로 표시하는 컴포넌트
-// 메인페이지와 동일한 Todo.css 스타일 사용
-// props: todos(투두 배열 [{ id, text, done }])
-function FriendTodo({ todos = [] }) {
-    // 해당 날짜에 투두가 없을 때
-    if (todos.length === 0) {
-        return (
-            <div className="todo-list">
-                <div style={{ fontSize: "14px", color: "#8f8f8f" }}>이 날은 할 일이 없어요.</div>
-            </div>
-        );
-    }
+const FriendTodo = ({ title = "To do List", todos = [], categories = {} }) => {
 
-    return (
-        <div className="todo-list">
-            {todos.map((todo) => (
-                <div key={todo.id} className={`todo-item ${todo.done ? "done" : ""}`}>
-                    {/* 완료 여부 체크박스 (읽기 전용) */}
-                    <div className={`checkbox ${todo.done ? "checked" : ""}`} />
-                    <span className="todo-text">{todo.text}</span>
-                </div>
-            ))}
+  return (
+    <div className="friend-todo">
+      <div className="todo-container">
+        <div className="todo-header">
+          <div className="todo-title">{title}</div>
         </div>
-    );
-}
+
+        <div className="todo-list">
+          {todos.length === 0 ? (
+            <div className="friend-todo__empty">등록된 투두가 없습니다.</div>
+          ) : (
+            todos.map((t) => (
+              <div key={t.id} className={`todo-item ${t.completed ? "done" : ""}`}>
+                <div className={`checkbox ${t.completed ? "checked" : ""}`} />
+                <div className="todo-text">{t.text}</div>
+                <div
+                  className="todo-category"
+                  style={categories[t.category] ?? undefined}
+                >
+                  {t.category}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default FriendTodo;

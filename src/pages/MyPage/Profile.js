@@ -33,7 +33,7 @@ const Profile = () => {
 
             setNickname(result.username ?? "");
             setIntro(result.intro ?? "");
-            setProfileImageUrl(result.setProfileImageUrl ?? null);
+            setProfileImageUrl(result.profileImageUrl ?? null);
 
             const songResponse = await get(config.YOUTUBE.ME);
 
@@ -48,9 +48,9 @@ const Profile = () => {
                 (a,bio) => new Date(bio.createdAt) - new Date(a.createdAt)
             );
 
-            const latest = song[0];
+            const latest = songs[0];
 
-            setSong(latest? `${latest.title}` - `${latest.artist}` : "");
+            setSong(latest ? `${latest.title} - ${latest.artist}` : "");
 
             console.log("프로필 데이터:", response);
         }catch (error) {
@@ -75,7 +75,7 @@ const Profile = () => {
         setTimeout(() => setSaved(false), 2000);
     };
 
-    const displayImageSrc = previewUrl || profileImg;
+    const displayImageSrc = previewUrl || profileImageUrl || profileImg;
 
     return (
     <div className="profile-container">
@@ -126,9 +126,11 @@ const Profile = () => {
                 </div>
                 <div className="profile-content-box">
                     <div className="profile-content">
+                        <span className="profile-music-icon">🎵</span>
                         <input
                             className="profile-content-input"
-                            value={`🎵 ${song}`}
+                            value={song}
+                            placeholder="노래 제목 - 아티스트"
                             onChange={(e) => setSong(e.target.value)}
                         />
                     </div>

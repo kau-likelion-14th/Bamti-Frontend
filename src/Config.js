@@ -25,7 +25,21 @@ const config = {
         DELETE: "/api/profile",
         INTRO: "/api/profile"
 ,
-    }
+    },
+
+    CALENDAR: {
+        GET: "/api/todos/calendar",           // GET    월별 캘린더 조회 (?year=&month=)
+    },
+
+    TODOS: {
+        LIST: "/api/todos",                   // GET    날짜별 Todo 조회 (?date=YYYY-MM-DD)
+        TOGGLE_COMPLETE: (todoId, date) =>    // PATCH  Todo 완료 상태 변경
+            `/api/todos/${todoId}/dates/${date}/complete`,
+    },
+
+    CATEGORIES: {
+        GET: "/api/categories",               // GET    카테고리 조회
+    },
 }
 
 export default config;

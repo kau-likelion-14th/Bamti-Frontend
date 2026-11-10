@@ -18,6 +18,14 @@ const config = {
         CREATE: "/api/follow",                // POST   팔로우
         AVAILABLE: "/api/follow",             // GET    팔로우 가능 사용자 목록
     },
+
+    PROFILE: {
+        GET: "/api/profile",
+        PUT: "/api/profile",
+        DELETE: "/api/profile",
+        INTRO: "/api/profile"
+,
+    }
 }
 
 export default config;

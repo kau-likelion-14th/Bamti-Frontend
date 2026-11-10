@@ -1,128 +1,179 @@
 .mypage-container {
-    max-width: 800px;
-    margin: 60px auto;
-    padding: 60px 40px;
-    font-family: 'Paperlogy', sans-serif;
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 120px 170px;
+  font-family: 'Paperlogy', sans-serif;
 }
 
-
-.profile-top {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 32px;
+/* ===== 프로필 (Profile.js) ===== */
+.profile-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.profile-img-wrapper {
-    position: relative;
-    width: 100px;
-    height: 100px;
+.profile-section {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  flex: 0 0 150px;
+  margin-right: 35px;
 }
 
 .profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #f0f0f0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
-.profile-edit-icon {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: none;
-    background: white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    cursor: pointer;
-    font-size: 14px;
+.profile-img-edit {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
-.profile-nickname {
-    font-size: 28px;
-    font-weight: bold;
-    flex: 1;
+.profile-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 30px;
 }
 
-.profile-save-btn {
-    padding: 12px 28px;
-    background: #0a84ff;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Paperlogy', sans-serif;
+.profile-edit {
+  padding: 15px 70px;
+  font-size: 18px;
+  background-color: #0A84FF;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-family: "Paperlogy", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  margin-left: auto;
+  margin-top: auto;
 }
 
-
-.profile-field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
+.profile-info {
+  margin: 70px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.profile-label {
-    font-size: 16px;
-    font-weight: 600;
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.profile-input {
-    padding: 14px 16px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: 'Paperlogy', sans-serif;
-    outline: none;
-    width: 400px;
+.profile-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #333333;
 }
 
-/* ===== 통계 카드 ===== */
+.profile-content-box {
+  padding: 20px 20px;
+  border-radius: 10px;
+  border: 1px solid #5c5c5c;
+  width: 450px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-content {
+  font-size: 16px;
+  color: #8f8f8f;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-music-icon {
+  flex-shrink: 0;
+}
+
+.profile-content-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: 'Paperlogy', sans-serif;
+  color: #8F8F8F;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-right: 20px;
+}
+
+.profile-search-icon {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* ===== 통계 카드 (Status.js / StatCard.js) ===== */
 .status-container {
-    display: flex;
-    gap: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 25px;
 }
 
 .stat-card {
-    flex: 1;
-    background: #f5f5f5;
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.stat-icon {
-    font-size: 28px;
-}
-
-.stat-title {
-    font-size: 15px;
-    color: #555;
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.stat-unit {
-    font-size: 16px;
-    font-weight: normal;
-    margin-left: 4px;
+  flex: 1;
+  min-width: 0;
+  height: 150px;
+  background-color: #f1f1f1;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 45px;
 }
 
 .stat-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 60px;
+}
+
+.stat-unit {
+  font-size: 16px;
+  margin-left: 10px;
+  font-weight: normal;
 }

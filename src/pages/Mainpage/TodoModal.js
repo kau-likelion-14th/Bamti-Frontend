@@ -8,11 +8,14 @@ const TodoModal = ({
     onSave, 
     onDelete, 
     initialTodo,
-    categories
+    categories = {}
 }) => {
     const isEditMode = Boolean(initialTodo); 
 
-    const [category, setCategory] = useState("공부"); 
+    const categoryKeys = Object.keys(categories); // 서버에서 받은 카테고리 이름 목록
+    const defaultCategory = categoryKeys[0] || "";
+
+    const [category, setCategory] = useState(defaultCategory); 
     const [text, setText] = useState("");
     const [routine, setRoutine] = useState(null);
 
@@ -21,10 +24,10 @@ const TodoModal = ({
     useEffect(() => {
         if (!isOpen) return;
 
-        setCategory(initialTodo?.category || "공부");
+        setCategory(initialTodo?.category || defaultCategory);
         setText(initialTodo?.text || "");
         setRoutine(initialTodo?.routine || null);
-    }, [isOpen, initialTodo]);
+    }, [isOpen, initialTodo, defaultCategory]);
 
     if (!isOpen) return null;
 
@@ -38,8 +41,6 @@ const TodoModal = ({
         });
     };
 
-    const categoryKeys = Object.keys(categories);
-
     return (
         <div className="modal-overlay" onClick={onClose}> 
             <div 
@@ -52,6 +53,9 @@ const TodoModal = ({
                 <div className="modal-section">
                     <div className="modal-label">카테고리</div>
                     <div className="modal-categories">
+                        {categoryKeys.length === 0 && (
+                            <div className="modal-label">카테고리를 불러오는 중...</div>
+                        )}
                         {categoryKeys.map((c) => (
                             <label
                                 key={c}

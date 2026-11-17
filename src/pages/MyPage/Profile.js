@@ -76,7 +76,6 @@ const Profile = () => {
         fileInputRef.current?.click();
     };
 
-    const [saved, setSaved] = useState(false);
     const handleSave = async () => {
         try {
             await put(

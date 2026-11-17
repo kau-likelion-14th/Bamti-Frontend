@@ -4,6 +4,7 @@ import {get, put, uploadProfile } from "../../Api"
 import config from "../../Config";
 import profileEdit from "../../assets/image/밤티프로필.webp";
 import profilemusic from "../../assets/image/밤티프로필.webp";
+import { post } from "../../Api";
 
 
 const Profile = () => {
@@ -11,7 +12,10 @@ const Profile = () => {
 
     const [nickname, setNickname] = useState("Likelion");
     const [intro, setIntro] = useState("안녕하세요");
-    const [song, setSong] = useState("에필로그 - 아이유");
+    const [song, setSong] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSearchResults, setShowSearchResults] = useState(false);
+    const [selectedSong, setSelectedSong] = useState(null);
 
     const [profileImageUrl,  setProfileImageUrl] = useState(null);
     const [selectedImageFile, setSelectedImageFile] = useState(null);
@@ -32,7 +36,7 @@ const Profile = () => {
             if(!result) return;
 
             setNickname(result.username ?? "");
-            setIntro(result.intro ?? "");
+            setIntro(result.introduction ?? "");
             setProfileImageUrl(result.profileImageUrl ?? null);
 
             const songResponse = await get(config.YOUTUBE.ME);
@@ -61,6 +65,9 @@ const Profile = () => {
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        setSelectedImageFile(file);
+
         if (previewUrl) URL.revokeObjectURL(previewUrl);
         setPreviewUrl(URL.createObjectURL(file));
     };
@@ -69,13 +76,85 @@ const Profile = () => {
         fileInputRef.current?.click();
     };
 
-    const [saved, setSaved] = useState(false);
-    const handleSave = () => {
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2000);
+    const handleSave = async () => {
+        try {
+            await put(
+                config.PROFILE.INTRO, {introduce: intro, }
+            );
+            
+            if (selectedImageFile) {
+                await uploadProfile(
+                    config.PROFILE.PUT,
+                    {imageFile: selectedImageFile},
+                    {imageField: "image"}
+                );
+            }
+
+            await handleSaveSong();
+
+            await fetchProfileData();
+
+            if(previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+
+            
+        } catch (error) {
+            console.error("프로필 저장 중 오류 발생:", error);
+
+            const message = error?.response?.data?.message ?? "프로필 저장 중 오류가 발생했습니다.";
+            
+            alert(message);
+        }
     };
 
     const displayImageSrc = previewUrl || profileImageUrl || profileImg;
+
+const handleSearchSong = async () => {
+    if (!song.trim()) {
+        alert("검색어를 입력해주세요.");
+        return;
+    }
+
+    try {
+        const response = await get(config.YOUTUBE.SEARCH, { q: song.trim()});
+
+        console.log("노래 검색 결과:", response);
+        
+        const results = response?.result ?? [];
+
+        setSearchResults(results);
+
+        setShowSearchResults(true);
+    } catch (error) {
+        console.error("노래 검색 중 오류 발생:", error);
+        alert("노래 검색 중 오류가 발생했습니다.");
+    }
+};
+
+const handleSelectSong = (picked) => {
+    setSelectedSong(picked);
+
+    setSong(`${picked.title} - ${picked.artist}`);
+    setShowSearchResults(false);
+}
+
+const handleSaveSong = async () => {
+    if (!selectedSong) return;
+
+    try {
+        await post(config.YOUTUBE.SAVE, {
+            songId: selectedSong.songId,
+            title: selectedSong.title,
+            artist: selectedSong.artist,
+        });
+
+        console.log("노래 저장 성공");
+    } catch (error) {
+        console.error("노래 저장 중 오류 발생:", error);
+        throw error;
+    }
+};
 
     return (
     <div className="profile-container">
@@ -129,17 +208,46 @@ const Profile = () => {
                         <span className="profile-music-icon">🎵</span>
                         <input
                             className="profile-content-input"
-                            value={song}
-                            placeholder="노래 제목 - 아티스트"
-                            onChange={(e) => setSong(e.target.value)}
+                            value={`${song}`}
+                            placeholder="좋아하는 노래를 검색해보세요"
+                            onChange={(e) => {
+                                setSong(e.target.value);
+                                setSelectedSong(null);
+                                setShowSearchResults(false);
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSearchSong();
+                                }
+                            }}
                         />
                     </div>
                     <img
                         src={profilemusic}
                         alt="프로필 노래 수정 아이콘"
                         className="profile-search-icon"
+                        onClick={handleSearchSong}
+                        style={{cursor: "pointer"}}
                     />
                 </div>
+
+                {showSearchResults && (
+                    <div className="song-search-results">
+                        {searchResults.length === 0 ? (
+                            <p>검색 결과가 없습니다.</p>
+                         ) : (
+                            searchResults.map((item) => (
+                                <div
+                                    key={item.songId}
+                                    className="song-search-item"
+                                    onClick={() => {handleSelectSong(item)}}
+                                >
+                                    {item.title} - {item.artist}
+                                </div>
+                            ))
+                         )}
+                        </div>
+                )}
             </div>
         </div>
     </div>

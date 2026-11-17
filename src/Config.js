@@ -23,9 +23,37 @@ const config = {
         GET: "/api/profile",
         PUT: "/api/profile",
         DELETE: "/api/profile",
-        INTRO: "/api/profile"
-,
-    }
+        INTRO: "/api/profile/intro",
+    },
+
+    YOUTUBE: {
+        SEARCH: "/api/youtube/search",
+        SAVE: "/api/youtube/save",
+        ME: "/api/youtube/me",       // GET    내 저장 곡 조회
+    },
+
+    CALENDAR: {
+        GET: "/api/todos/calendar",           // GET    월별 캘린더 조회 (?year=&month=)
+    },
+
+    STATISTICS: {
+        GET: "/api/statistic",
+    },
+
+    TODOS: {
+        LIST: "/api/todos",                   // GET    날짜별 Todo 조회 (?date=YYYY-MM-DD)
+        CREATE: "/api/todos",                 // POST   Todo 추가 (일반 Todo는 ?date=YYYY-MM-DD 필수)
+        DETAIL: (todoId) =>                   // GET    Todo 상세 조회 / PUT Todo 수정
+            `/api/todos/${todoId}`,
+        DELETE: (todoId, date) =>             // DELETE 선택한 날짜 기준 Todo 삭제 (루틴은 그 날짜만)
+            `/api/todos/${todoId}/dates/${date}`,
+        TOGGLE_COMPLETE: (todoId, date) =>    // PATCH  Todo 완료 상태 변경
+            `/api/todos/${todoId}/dates/${date}/complete`,
+    },
+
+    CATEGORIES: {
+        GET: "/api/categories",               // GET    카테고리 조회
+    },
 }
 
 export default config;

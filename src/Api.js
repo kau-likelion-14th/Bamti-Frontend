@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "./Config";
-import { data } from "react-router-dom";
 
 const api = axios.create({
     baseURL: config.API_URL,
@@ -123,8 +122,6 @@ export const patch = async (endpoint, data = {}, options = {}) => {
   validateContentType(response);
   return response.data;
 };
-
-const formData = new FormData();
 
 export const uploadImageWithJson = async (
   endpoint,

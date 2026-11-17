@@ -282,3 +282,30 @@
 .date-input {
     cursor: pointer;
 }
+
+/* ===== Todo 클릭 → 수정 모달 ===== */
+.todo-item {
+    cursor: pointer;
+}
+
+/* ===== 루틴 행 비활성화 / 해제 / 에러 ===== */
+.modal-container .routine-row.disabled {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.modal-container .routine-clear {
+    margin-top: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #8a8a8a;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.routine-error {
+    color: #ff383c;
+    font-size: 13px;
+}

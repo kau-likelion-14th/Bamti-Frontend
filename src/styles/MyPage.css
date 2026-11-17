@@ -1,10 +1,12 @@
 .mypage-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 120px 170px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 24px;
+  box-sizing: border-box;
   font-family: 'Paperlogy', sans-serif;
 }
 
@@ -56,10 +58,15 @@
   font-weight: bold;
   color: #333333;
   margin-top: 30px;
+  flex: 1;
+  min-width: 0;
+  word-break: break-all;
 }
 
 .profile-edit {
-  padding: 15px 70px;
+  padding: 15px 40px;
+  white-space: nowrap;
+  flex-shrink: 0;
   font-size: 18px;
   background-color: #0A84FF;
   border: none;
@@ -73,6 +80,7 @@
 }
 
 .profile-info {
+  width: 100%;
   margin: 70px 0px;
   display: flex;
   flex-direction: column;
@@ -95,7 +103,9 @@
   padding: 20px 20px;
   border-radius: 10px;
   border: 1px solid #5c5c5c;
-  width: 450px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -140,18 +150,23 @@
   display: flex;
   justify-content: flex-start;
   gap: 25px;
+  flex-wrap: wrap;
 }
 
 .stat-card {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 220px;
   height: 150px;
   background-color: #f1f1f1;
   border-radius: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0px 45px;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+
+.stat-title {
+  white-space: nowrap;
 }
 
 .stat-header {
@@ -169,7 +184,8 @@
 .stat-value {
   font-size: 24px;
   font-weight: bold;
-  margin-left: 60px;
+  margin-left: 50px;
+  white-space: nowrap;
 }
 
 .stat-unit {

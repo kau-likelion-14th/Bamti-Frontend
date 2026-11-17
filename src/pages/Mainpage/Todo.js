@@ -30,8 +30,18 @@ const toCategoryStyles = (list) =>
         return acc;
     }, {});
 
-const Todo = ({ todos = [], onToggleComplete, togglingId }) => {
+const Todo = ({
+    todos = [],
+    onToggleComplete,
+    togglingId,
+    selectedDateKey,
+    onFetchDetail,
+    onCreate,
+    onUpdate,
+    onDelete,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTodo, setEditingTodo] = useState(null); // null이면 추가 모드, 값이 있으면 수정 모드
     const [serverCategories, setServerCategories] = useState([]);
 
     // 카테고리 조회 (처음 한 번)
@@ -55,26 +65,56 @@ const Todo = ({ todos = [], onToggleComplete, togglingId }) => {
     const getCategoryStyle = (name) =>
         categories[name] ?? { backgroundColor: DEFAULT_COLORS[name] ?? '#EEEEEE', color: '#333' };
 
-    // Todo 추가 API는 이번 과제 범위가 아니라서 저장 시 모달만 닫음
-    const handledSaveTodo = () => {
+    const closeModal = () => {
         setIsModalOpen(false);
+        setEditingTodo(null);
     };
 
-    const handledDeleteTodo = () => {
-        setIsModalOpen(false);
+    // + 버튼 : 추가 모드로 열기
+    const openCreateModal = () => {
+        setEditingTodo(null);
+        setIsModalOpen(true);
+    };
+
+    // Todo 클릭 : 상세 조회 후 수정 모드로 열기
+    const openEditModal = async (todo) => {
+        const detail = await onFetchDetail?.(todo.id);
+        if (!detail) return;
+        setEditingTodo(detail);
+        setIsModalOpen(true);
+    };
+
+    // 저장 : 수정 모드면 PUT, 추가 모드면 POST (성공했을 때만 모달 닫기)
+    const handleSaveTodo = async (form) => {
+        const success = editingTodo
+            ? await onUpdate?.(editingTodo.id, form)
+            : await onCreate?.(form);
+        if (success) closeModal();
+    };
+
+    const handleDeleteTodo = async () => {
+        if (!editingTodo) return;
+        const message = editingTodo.routine
+            ? "이 날짜의 루틴 Todo만 삭제됩니다. 삭제할까요?"
+            : "Todo를 삭제할까요?";
+        if (!window.confirm(message)) return;
+
+        const success = await onDelete?.(editingTodo.id);
+        if (success) closeModal();
     };
 
     return (
         <div className="todo-container">
             <div className="todo-header">
                 <div className="todo-title">To do List</div>
-                <button className="todo-add" onClick={() => setIsModalOpen(true)}>+</button>
+                <button className="todo-add" onClick={openCreateModal}>+</button>
             </div>
             <div className="todo-list">
                 {todos.map((t) => (
                     <div
                         key={t.id}
                         className={`todo-item ${t.completed ? 'done' : ''}`}
+                        onClick={() => openEditModal(t)}
                     >
                         <div className="todo-text">{t.text}</div>
                         <div className="todo-category" style={getCategoryStyle(t.category)}>
@@ -94,11 +134,12 @@ const Todo = ({ todos = [], onToggleComplete, togglingId }) => {
             </div>
             <TodoModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onSave={handledSaveTodo}
-                onDelete={handledDeleteTodo}
-                initialTodo={null}
+                onClose={closeModal}
+                onSave={handleSaveTodo}
+                onDelete={handleDeleteTodo}
+                initialTodo={editingTodo}
                 categories={categories}
+                defaultStartDate={selectedDateKey}
             />
         </div>
     );

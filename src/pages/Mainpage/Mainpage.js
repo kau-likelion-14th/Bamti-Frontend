@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomCalendar from "./Calendar";
 import Todo from "./Todo";
-import { get, patch } from "../../Api";
+import { get, post, put, del, patch } from "../../Api";
 import config from "../../Config";
 import "../../styles/MainPage.css";
 
@@ -20,6 +20,29 @@ const toTodoModel = (todo) => ({
   completed: todo.completed,
 });
 
+// 상세 조회 응답 → 수정 모달에서 쓰는 형태로 변환
+const toTodoForm = (detail) => ({
+  id: detail.todoId,
+  text: detail.description,
+  category: detail.categoryName,
+  routine: detail.routineEnabled
+    ? { startDate: detail.startDate, endDate: detail.endDate, week: detail.week }
+    : null,
+});
+
+// 모달 입력값 → 추가·수정 API 요청 body로 변환
+const toTodoRequest = ({ text, category, routine }) => ({
+  categoryName: category,
+  description: text,
+  routineEnabled: Boolean(routine),
+  startDate: routine?.startDate ?? null,
+  endDate: routine?.endDate ?? null,
+  week: routine?.week ?? null,
+});
+
+// 서버 에러 메시지가 있으면 그걸 보여주고, 없으면 기본 문구 사용
+const getErrorMessage = (error, fallback) => error?.response?.data?.message || fallback;
+
 // 캘린더 응답에서 날짜 목록 꺼내기 (result가 배열이거나 { days: [...] } 형태 모두 처리)
 const extractDays = (result) => {
   if (Array.isArray(result)) return result;
@@ -33,7 +56,7 @@ const MainPage = () => {
 
   const [todos, setTodos] = useState([]); // 선택한 날짜의 Todo 목록 (서버 데이터)
   const [remainingByDate, setRemainingByDate] = useState({}); // { "2026-11-07": { hasTodo, remaining } }
-  const [refreshKey, setRefreshKey] = useState(0); // 완료 상태 변경 후 다시 조회하기 위한 키
+  const [refreshKey, setRefreshKey] = useState(0); // 추가·수정·삭제·완료 후 캘린더와 Todo를 다시 조회하기 위한 키
   const [togglingId, setTogglingId] = useState(null); // 요청 중인 Todo (중복 클릭 방지)
 
   const dateKey = toDateKey(selectedDate);
@@ -98,12 +121,67 @@ const MainPage = () => {
       await patch(config.TODOS.TOGGLE_COMPLETE(todo.id, dateKey), {
         completed: !todo.completed,
       });
-      setRefreshKey((prev) => prev + 1);
+      refresh();
     } catch (error) {
       console.error("완료 상태 변경 실패:", error);
       alert("완료 상태를 변경하지 못했습니다. 다시 시도해 주세요.");
     } finally {
       setTogglingId(null);
+    }
+  };
+
+  const refresh = () => setRefreshKey((prev) => prev + 1);
+
+  // 4. 상세 조회 : Todo를 눌렀을 때 수정 모달에 채울 데이터 가져오기
+  const handleFetchDetail = async (todoId) => {
+    try {
+      const response = await get(config.TODOS.DETAIL(todoId));
+      return toTodoForm(response.result);
+    } catch (error) {
+      console.error("Todo 상세 조회 실패:", error);
+      alert(getErrorMessage(error, "Todo 정보를 불러오지 못했습니다."));
+      return null;
+    }
+  };
+
+  // 5. 추가 : 일반 Todo는 선택한 날짜에, 루틴 Todo는 시작~종료 날짜의 반복 요일에 생성
+  const handleCreateTodo = async (form) => {
+    try {
+      await post(config.TODOS.CREATE, toTodoRequest(form), {
+        params: form.routine ? {} : { date: dateKey },
+      });
+      refresh();
+      return true;
+    } catch (error) {
+      console.error("Todo 추가 실패:", error);
+      alert(getErrorMessage(error, "Todo를 추가하지 못했습니다."));
+      return false;
+    }
+  };
+
+  // 6. 수정
+  const handleUpdateTodo = async (todoId, form) => {
+    try {
+      await put(config.TODOS.DETAIL(todoId), toTodoRequest(form));
+      refresh();
+      return true;
+    } catch (error) {
+      console.error("Todo 수정 실패:", error);
+      alert(getErrorMessage(error, "Todo를 수정하지 못했습니다."));
+      return false;
+    }
+  };
+
+  // 7. 삭제 : 선택한 날짜 기준 (루틴 Todo는 그 날짜만 삭제됨)
+  const handleDeleteTodo = async (todoId) => {
+    try {
+      await del(config.TODOS.DELETE(todoId, dateKey));
+      refresh();
+      return true;
+    } catch (error) {
+      console.error("Todo 삭제 실패:", error);
+      alert(getErrorMessage(error, "Todo를 삭제하지 못했습니다."));
+      return false;
     }
   };
 
@@ -120,6 +198,11 @@ const MainPage = () => {
         todos={todos} // 서버에서 받은 선택 날짜의 Todo 목록
         onToggleComplete={handleToggleComplete} // 체크박스 클릭 시 서버에 완료 상태 변경
         togglingId={togglingId}
+        selectedDateKey={dateKey} // 루틴 시작 날짜 기본값
+        onFetchDetail={handleFetchDetail}
+        onCreate={handleCreateTodo}
+        onUpdate={handleUpdateTodo}
+        onDelete={handleDeleteTodo}
       />
     </div>
   );

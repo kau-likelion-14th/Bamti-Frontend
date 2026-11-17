@@ -36,6 +36,10 @@ const config = {
         GET: "/api/todos/calendar",           // GET    월별 캘린더 조회 (?year=&month=)
     },
 
+    STATISTICS: {
+        GET: "/api/statistic",
+    },
+
     TODOS: {
         LIST: "/api/todos",                   // GET    날짜별 Todo 조회 (?date=YYYY-MM-DD)
         TOGGLE_COMPLETE: (todoId, date) =>    // PATCH  Todo 완료 상태 변경

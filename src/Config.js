@@ -23,8 +23,13 @@ const config = {
         GET: "/api/profile",
         PUT: "/api/profile",
         DELETE: "/api/profile",
-        INTRO: "/api/profile"
-,
+        INTRO: "/api/profile/intro",
+    },
+
+    YOUTUBE: {
+        SEARCH: "/api/youtube/search",
+        SAVE: "/api/youtube/save",
+        ME: "/api/youtube/me",       // GET    내 저장 곡 조회
     },
 
     CALENDAR: {

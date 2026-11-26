@@ -59,14 +59,14 @@ function LoginPage() {
     onceRef.current = true;
 
     const expectedState =
-      sessionStorage.getItem("kakaoOAuthState");
+      localStorage.getItem("kakaoOAuthState");
 
     if (!expectedState || params.get("state") !== expectedState) {
       setError("로그인 요청을 확인할 수 없습니다. 다시 시도해 주세요.");
       return;
     }
 
-    sessionStorage.removeItem("kakaoOAuthState");
+    localStorage.removeItem("kakaoOAuthState");
 
     axios
       .post(
@@ -104,7 +104,7 @@ function LoginPage() {
     }
 
     const state = window.crypto.randomUUID();
-    sessionStorage.setItem("kakaoOAuthState", state);
+    localStorage.setItem("kakaoOAuthState", state);
 
     const params = new URLSearchParams({
       client_id: restKey,

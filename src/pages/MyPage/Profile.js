@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import profileImg from "../../assets/image/밤티프로필.webp";
 import {get, put, uploadProfile } from "../../Api"
 import config from "../../Config";
-import profileEdit from "../../assets/image/밤티프로필.webp";
-import profilemusic from "../../assets/image/밤티프로필.webp";
+import profileEdit from "../../assets/icon/edit.svg";
+import searchIcon from "../../assets/icon/search.png";
 import { post } from "../../Api";
 
 
@@ -223,8 +223,8 @@ const handleSaveSong = async () => {
                         />
                     </div>
                     <img
-                        src={profilemusic}
-                        alt="프로필 노래 수정 아이콘"
+                        src={searchIcon}
+                        alt="노래 검색 아이콘"
                         className="profile-search-icon"
                         onClick={handleSearchSong}
                         style={{cursor: "pointer"}}
